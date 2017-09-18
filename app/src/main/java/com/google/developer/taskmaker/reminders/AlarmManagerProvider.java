@@ -10,15 +10,19 @@ import android.content.Context;
  * NO MODIFICATIONS SHOULD BE MADE TO THIS CLASS OR ITS USAGE.
  */
 public class AlarmManagerProvider {
+
     private static final String TAG = AlarmManagerProvider.class.getSimpleName();
     private static AlarmManager sAlarmManager;
+
     public static synchronized void injectAlarmManager(AlarmManager alarmManager) {
         if (sAlarmManager != null) {
             throw new IllegalStateException("Alarm Manager Already Set");
         }
         sAlarmManager = alarmManager;
     }
-    /*package*/ static synchronized AlarmManager getAlarmManager(Context context) {
+
+    /* Visibility only package */
+    static synchronized AlarmManager getAlarmManager(Context context) {
         if (sAlarmManager == null) {
             sAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         }

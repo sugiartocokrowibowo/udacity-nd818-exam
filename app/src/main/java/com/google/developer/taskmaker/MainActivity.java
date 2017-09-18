@@ -1,37 +1,49 @@
 package com.google.developer.taskmaker;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.developer.taskmaker.data.DatabaseContract;
 import com.google.developer.taskmaker.data.TaskAdapter;
+import com.google.developer.taskmaker.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         TaskAdapter.OnItemClickListener,
         View.OnClickListener {
 
+    private static final int TASK_LOADER = 0;
+
     private TaskAdapter mAdapter;
+
+    private ActivityMainBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        setSupportActionBar(mBinding.toolbar);
 
         mAdapter = new TaskAdapter(null);
         mAdapter.setOnItemClickListener(this);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.recyclerView.setHasFixedSize(true);
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mBinding.fab.setOnClickListener(this);
+
+        getSupportLoaderManager().initLoader(TASK_LOADER, null, this);
     }
 
     @Override
@@ -69,5 +81,20 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onItemToggled(boolean active, int position) {
         //TODO: Handle task item checkbox event
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(this, DatabaseContract.CONTENT_URI, null, null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mAdapter.swapCursor(null);
     }
 }

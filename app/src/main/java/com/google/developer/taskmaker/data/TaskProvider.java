@@ -25,6 +25,7 @@ public class TaskProvider extends ContentProvider {
     private TaskDbHelper mDbHelper;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
     static {
         // content://com.google.developer.taskmaker/tasks
         sUriMatcher.addURI(DatabaseContract.CONTENT_AUTHORITY,
@@ -52,27 +53,92 @@ public class TaskProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
-                        String sortOrder) {
-        //TODO: Implement task query
-        //TODO: Expected "query all" Uri: content://com.google.developer.taskmaker/tasks
-        //TODO: Expected "query one" Uri: content://com.google.developer.taskmaker/tasks/{id}
-        return null;
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        //DONE: Implement task query
+        //DONE: Expected "query all" Uri: content://com.google.developer.taskmaker/tasks
+        //DONE: Expected "query one" Uri: content://com.google.developer.taskmaker/tasks/{id}
+        Cursor returnCursor;
+        final SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        final int endpoint = sUriMatcher.match(uri);
+        switch (endpoint) {
+            case TASKS:
+            case TASKS_WITH_ID:
+                if (endpoint == TASKS_WITH_ID) {
+                    final long id = ContentUris.parseId(uri);
+                    selection = String.format("%s = ?", DatabaseContract.TaskColumns._ID);
+                    selectionArgs = new String[]{String.valueOf(id)};
+                }
+                returnCursor = db.query(
+                        DatabaseContract.TABLE_TASKS,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown URI:" + uri);
+        }
+
+        final Context context = getContext();
+        if (context != null) {
+            returnCursor.setNotificationUri(context.getContentResolver(), uri);
+        }
+
+        return returnCursor;
     }
 
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        //TODO: Implement new task insert
-        //TODO: Expected Uri: content://com.google.developer.taskmaker/tasks
-        return null;
+        //DONE: Implement new task insert
+        //DONE: Expected Uri: content://com.google.developer.taskmaker/tasks
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        Uri returnUri;
+
+        switch (sUriMatcher.match(uri)) {
+            case TASKS:
+                db.insert(DatabaseContract.TABLE_TASKS, null, values);
+                returnUri = DatabaseContract.CONTENT_URI;
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown URI:" + uri);
+        }
+
+        final Context context = getContext();
+        if (context != null) {
+            context.getContentResolver().notifyChange(uri, null);
+        }
+
+        return returnUri;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        //TODO: Implement existing task update
-        //TODO: Expected Uri: content://com.google.developer.taskmaker/tasks/{id}
-        return 0;
+        //DONE: Implement existing task update
+        //DONE: Expected Uri: content://com.google.developer.taskmaker/tasks/{id}
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        int affectedRows = 0;
+
+        switch (sUriMatcher.match(uri)) {
+            case TASKS:
+                final long id = ContentUris.parseId(uri);
+                selection = String.format("%s = ?", DatabaseContract.TaskColumns._ID);
+                selectionArgs = new String[]{String.valueOf(id)};
+                affectedRows = db.update(DatabaseContract.TABLE_TASKS, values, selection, selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown URI:" + uri);
+        }
+
+        final Context context = getContext();
+        if (context != null) {
+            context.getContentResolver().notifyChange(uri, null);
+        }
+        return affectedRows;
     }
 
     @Override
@@ -92,12 +158,13 @@ public class TaskProvider extends ContentProvider {
                 throw new IllegalArgumentException("Illegal delete URI");
         }
 
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         int count = db.delete(DatabaseContract.TABLE_TASKS, selection, selectionArgs);
 
-        if (count > 0) {
+        final Context context = getContext();
+        if (count > 0 && context != null) {
             //Notify observers of the change
-            getContext().getContentResolver().notifyChange(uri, null);
+            context.getContentResolver().notifyChange(uri, null);
         }
 
         return count;
@@ -106,8 +173,7 @@ public class TaskProvider extends ContentProvider {
     /* Initiate a periodic job to clear out completed items */
     private void manageCleanupJob() {
         Log.d(TAG, "Scheduling cleanup job");
-        JobScheduler jobScheduler = (JobScheduler) getContext()
-                .getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        JobScheduler jobScheduler = (JobScheduler) getContext().getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
         //Run the job approximately every hour
         long jobInterval = 900000L;

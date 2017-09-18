@@ -3,6 +3,7 @@ package com.google.developer.taskmaker.views;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -12,7 +13,7 @@ import com.google.developer.taskmaker.R;
  * Custom view to display the state of a task as well as
  * its description text.
  */
-public class TaskTitleView extends TextView {
+public class TaskTitleView extends AppCompatTextView {
     public static final int NORMAL = 0;
     public static final int DONE = 1;
     public static final int OVERDUE = 2;
