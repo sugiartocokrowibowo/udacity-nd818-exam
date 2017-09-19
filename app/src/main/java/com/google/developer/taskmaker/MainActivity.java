@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
+        mBinding.layoutNoData.setVisibility(data.getCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override
