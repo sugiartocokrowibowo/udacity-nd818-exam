@@ -61,14 +61,8 @@ public class TaskDetailActivity extends AppCompatActivity implements
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         //DONE: Handle date selection from a DatePickerFragment
-        final long nowTime = Calendar.getInstance().getTimeInMillis();
         final long pickerTime = AppUtils.getTaskStandardTimeInMillis(day, month, year);
-        long alarmTime = pickerTime - nowTime;
-        if (alarmTime < 0) {
-            // If hour of the day is after 12:00:00, execute alarm immediately.
-            alarmTime = 0;
-        }
-        AlarmScheduler.scheduleAlarm(this, alarmTime, mTaskUri);
+        AlarmScheduler.scheduleAlarm(this, pickerTime, mTaskUri);
         setResult(MainActivity.RESULT_REMIND_OK);
         finish();
     }
