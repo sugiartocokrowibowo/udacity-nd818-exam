@@ -71,7 +71,7 @@ public class Task {
     /**
      * Useful to verify if date due is past.
      */
-    boolean isPastDuoDate() {
+    boolean isPastDueDate() {
         boolean isPast = false;
         if (hasDueDate()) {
             final Calendar calendar = Calendar.getInstance();

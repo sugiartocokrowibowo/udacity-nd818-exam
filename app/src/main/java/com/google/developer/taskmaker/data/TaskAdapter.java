@@ -79,19 +79,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
     public void onBindViewHolder(TaskHolder holder, int position) {
         //DONE: Bind the task data to the views
         final Task task = getItem(position);
+        holder.mBinding.textDescription.setText(task.description);
+        holder.mBinding.priority.setImageResource(task.isPriority ? R.drawable.ic_priority : R.drawable.ic_not_priority);
+        holder.mBinding.checkbox.setChecked(task.isComplete);
         if (task.hasDueDate()) {
             holder.mBinding.textDate.setVisibility(View.VISIBLE);
             holder.mBinding.textDate.setText(DateUtils.getRelativeTimeSpanString(task.dueDateMillis));
-            final int state = task.isComplete ? DONE : task.isPastDuoDate() ? OVERDUE : NORMAL;
+            final int state = task.isComplete ? DONE : task.isPastDueDate() ? OVERDUE : NORMAL;
             holder.mBinding.textDescription.setState(state);
         } else {
             holder.mBinding.textDate.setVisibility(View.GONE);
             holder.mBinding.textDate.setText(R.string.date_empty);
             holder.mBinding.textDescription.setState(NORMAL);
         }
-        holder.mBinding.textDescription.setText(task.description);
-        holder.mBinding.priority.setImageResource(task.isPriority ? R.drawable.ic_priority : R.drawable.ic_not_priority);
-        holder.mBinding.checkbox.setChecked(task.isComplete);
     }
 
     @Override

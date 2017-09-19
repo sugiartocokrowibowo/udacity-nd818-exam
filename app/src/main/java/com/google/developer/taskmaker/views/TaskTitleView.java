@@ -47,22 +47,25 @@ public class TaskTitleView extends AppCompatTextView {
      * @param state New state. One of {@link #NORMAL}, {@link #DONE}, or {@link #OVERDUE}.
      */
     public void setState(int state) {
+        // Remove Paint.STRIKE_THRU_TEXT_FLAG if exists
+        if ((getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) == Paint.STRIKE_THRU_TEXT_FLAG) {
+            setPaintFlags(getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+        final Context context = getContext();
         switch (state) {
             case DONE:
-                setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                setTextColor(ContextCompat.getColor(getContext(), R.color.black));
+                setPaintFlags(getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                setTextColor(ContextCompat.getColor(context, R.color.black));
             case NORMAL:
-                setPaintFlags(0);
-                setTextColor(ContextCompat.getColor(getContext(), R.color.black));
+                setTextColor(ContextCompat.getColor(context, R.color.black));
                 break;
             case OVERDUE:
-                setPaintFlags(0);
-                setTextColor(ContextCompat.getColor(getContext(), R.color.red));
+                setTextColor(ContextCompat.getColor(context, R.color.red));
                 break;
             default:
                 return;
         }
-
+        invalidate();
         mState = state;
     }
 }

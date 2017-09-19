@@ -20,12 +20,11 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.google.developer.taskmaker.views.TaskTitleView
+            <TextView
                 android:id="@+id/text_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:ellipsize="end"
                 android:maxLines="1"
                 android:textAppearance="?android:textAppearanceLarge"
                 tools:text="Call Mom" />
