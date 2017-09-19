@@ -21,4 +21,8 @@
     <string name="pref_sortBy_key" translatable="false">sort</string>
     <string name="pref_sortBy_default" translatable="false">default</string>
     <string name="pref_sortBy_due" translatable="false">due</string>
+
+    <string name="msg_task_completed">Task completed!</string>
+    <string name="msg_task_uncompleted">Task non completed!</string>
+    <string name="action_undo">UNDO</string>
 </resources>

@@ -18,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.google.developer.taskmaker.data.Task;
+import com.google.developer.taskmaker.data.TaskUpdateService;
 import com.google.developer.taskmaker.databinding.ActivityTaskDetailBinding;
 import com.google.developer.taskmaker.reminders.AlarmScheduler;
 import com.google.developer.taskmaker.util.AppUtils;
@@ -99,6 +100,10 @@ public class TaskDetailActivity extends AppCompatActivity implements
                 if (!mDatePickerDialog.isShowing()) {
                     mDatePickerDialog.show();
                 }
+                return true;
+            case R.id.action_delete:
+                TaskUpdateService.deleteTask(this, mTaskUri);
+                super.onBackPressed();
                 return true;
             default:
                 break;
