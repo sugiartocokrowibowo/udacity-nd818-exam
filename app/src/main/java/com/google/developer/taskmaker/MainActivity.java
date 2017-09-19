@@ -1,8 +1,11 @@
 package com.google.developer.taskmaker;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -14,36 +17,36 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.google.developer.taskmaker.data.DatabaseContract;
+import com.google.developer.taskmaker.data.Task;
 import com.google.developer.taskmaker.data.TaskAdapter;
+import com.google.developer.taskmaker.data.TaskUpdateService;
 import com.google.developer.taskmaker.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
-        TaskAdapter.OnItemClickListener,
-        View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, TaskAdapter.OnItemClickListener {
 
-    private static final int TASK_LOADER = 0;
+    private static final int LOADER_ID = 0;
 
     private TaskAdapter mAdapter;
-
-    private ActivityMainBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        setSupportActionBar(mBinding.toolbar);
+        setSupportActionBar(binding.toolbar);
 
         mAdapter = new TaskAdapter(null);
         mAdapter.setOnItemClickListener(this);
 
-        mBinding.recyclerView.setHasFixedSize(true);
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setAdapter(mAdapter);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mBinding.fab.setOnClickListener(this);
-
-        getSupportLoaderManager().initLoader(TASK_LOADER, null, this);
+        binding.fab.setOnClickListener(v -> {
+            final Intent intent = new Intent(this, AddTaskActivity.class);
+            startActivity(intent);
+        });
+        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @Override
@@ -57,30 +60,34 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
+            final Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    /* Click events in Floating Action Button */
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(this, AddTaskActivity.class);
-        startActivity(intent);
-    }
-
     /* Click events in RecyclerView items */
     @Override
     public void onItemClick(View v, int position) {
-        //TODO: Handle list item click event
+        //DONE: Handle list item click event
+        final Task task = mAdapter.getItem(position);
+        final Intent intent = new Intent(this, TaskDetailActivity.class);
+        intent.setData(ContentUris.withAppendedId(DatabaseContract.CONTENT_URI, task.id));
+        startActivity(intent);
     }
 
     /* Click events on RecyclerView item checkboxes */
     @Override
     public void onItemToggled(boolean active, int position) {
-        //TODO: Handle task item checkbox event
+        //DONE: Handle task item checkbox event
+        final Task task = mAdapter.getItem(position);
+
+        final ContentValues values = new ContentValues(1);
+        values.put(DatabaseContract.TaskColumns.IS_COMPLETE, !task.isComplete);
+
+        final Uri uri = ContentUris.withAppendedId(DatabaseContract.CONTENT_URI, task.id);
+        TaskUpdateService.updateTask(this, uri, values);
     }
 
     @Override

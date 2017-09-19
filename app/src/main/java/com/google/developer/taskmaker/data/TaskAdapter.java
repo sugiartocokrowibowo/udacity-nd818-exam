@@ -3,6 +3,7 @@ package com.google.developer.taskmaker.data;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import com.google.developer.taskmaker.databinding.ListItemTaskBinding;
 
 import java.util.Date;
 
-import static com.google.developer.taskmaker.util.AppUtils.DATE_FORMAT;
 import static com.google.developer.taskmaker.util.AppUtils.DATE_NOW;
 import static com.google.developer.taskmaker.views.TaskTitleView.DONE;
 import static com.google.developer.taskmaker.views.TaskTitleView.NORMAL;
@@ -82,21 +82,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
     public void onBindViewHolder(TaskHolder holder, int position) {
         //DONE: Bind the task data to the views
         final Task task = getItem(position);
-
+        if (task.hasDueDate()) {
+            holder.mBinding.textDate.setVisibility(View.VISIBLE);
+            holder.mBinding.textDate.setText(DateUtils.getRelativeTimeSpanString(task.dueDateMillis));
+            final Date dueDate = new Date(task.dueDateMillis);
+            final int state = task.isComplete ? DONE : dueDate.before(DATE_NOW) ? OVERDUE : NORMAL;
+            holder.mBinding.textDescription.setState(state);
+        } else {
+            holder.mBinding.textDate.setVisibility(View.GONE);
+            holder.mBinding.textDate.setText(R.string.date_empty);
+            holder.mBinding.textDescription.setState(NORMAL);
+        }
         holder.mBinding.textDescription.setText(task.description);
         holder.mBinding.priority.setImageResource(task.isPriority ? R.drawable.ic_priority : R.drawable.ic_not_priority);
         holder.mBinding.checkbox.setChecked(task.isComplete);
-
-        final Date dueDate = task.hasDueDate() ? new Date(task.dueDateMillis) : null;
-        if (dueDate == null) {
-            holder.mBinding.textDate.setText(R.string.date_empty);
-            holder.mBinding.textDescription.setState(NORMAL);
-        } else {
-            holder.mBinding.textDate.setText(DATE_FORMAT.format(dueDate));
-            final int state = task.isComplete ? DONE : dueDate.after(DATE_NOW) ? OVERDUE : NORMAL;
-            holder.mBinding.textDescription.setState(state);
-        }
-
     }
 
     @Override
@@ -110,7 +109,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
      * @param position Adapter item position.
      * @return A new {@link Task} filled with the position's attributes.
      */
-    private Task getItem(int position) {
+    public Task getItem(int position) {
         if (!mCursor.moveToPosition(position)) {
             throw new IllegalStateException("Invalid item position requested");
         }

@@ -124,7 +124,7 @@ public class TaskProvider extends ContentProvider {
         int affectedRows = 0;
 
         switch (sUriMatcher.match(uri)) {
-            case TASKS:
+            case TASKS_WITH_ID:
                 final long id = ContentUris.parseId(uri);
                 selection = String.format("%s = ?", DatabaseContract.TaskColumns._ID);
                 selectionArgs = new String[]{String.valueOf(id)};

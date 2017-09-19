@@ -77,8 +77,7 @@ public class TaskUpdateService extends IntentService {
         int count = getContentResolver().delete(uri, null, null);
 
         //Cancel any reminders that might be set for this item
-        PendingIntent operation =
-                ReminderAlarmService.getReminderPendingIntent(this, uri);
+        PendingIntent operation = ReminderAlarmService.getReminderPendingIntent(this, uri);
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         manager.cancel(operation);
 

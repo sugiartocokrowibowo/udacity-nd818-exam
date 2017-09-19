@@ -18,6 +18,4 @@ public final class AppUtils {
 
     public static final Date DATE_NOW = Calendar.getInstance(LOCALE).getTime();
 
-    public static final SimpleDateFormat DATE_FORMAT =   new SimpleDateFormat("MMM dd", LOCALE);
-
 }

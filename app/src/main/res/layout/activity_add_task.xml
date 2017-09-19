@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.google.developer.taskmaker.AddTaskActivity">
 
         <android.support.design.widget.TextInputLayout
@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/task_description"
-                android:maxLines="1"/>
+                android:maxLines="1" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -31,23 +31,23 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_below="@id/text_wrapper_description"
+            android:text="@string/task_priority"
             android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="?android:textColorSecondary"
-            android:text="@string/task_priority"/>
+            android:textColor="?android:textColorSecondary" />
 
         <RelativeLayout
             android:id="@+id/select_date"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:gravity="center"
-            android:layout_below="@id/switch_priority">
+            android:layout_below="@id/switch_priority"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/label_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:text="@string/task_date"/>
+                android:text="@string/task_date"
+                android:textAppearance="?android:textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/text_date"
@@ -56,7 +56,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:textAppearance="?android:textAppearanceMedium"
-                tools:text="Not Set"/>
+                tools:text="Not Set" />
 
         </RelativeLayout>
 
