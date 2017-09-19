@@ -21,6 +21,8 @@ import java.util.Calendar;
 
 public class AddTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
+    private static final String KEY_DUE_DATE = "AddTaskActivity.mDueDate";
+
     //Selected due date, stored as a timestamp
     private long mDueDate = Long.MAX_VALUE;
 
@@ -100,4 +102,16 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         finish();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(KEY_DUE_DATE, mDueDate);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mDueDate = savedInstanceState.getLong(KEY_DUE_DATE);
+        setDateSelection(mDueDate);
+    }
 }

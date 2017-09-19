@@ -11,7 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fcc3291b-945b-4ad5-bd1f-bf66f32ece36" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/reminders/ReminderAlarmService.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/reminders/ReminderAlarmService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/AddTaskActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/AddTaskActivity.java" />
     </list>
     <ignored path="udacity-nd818-exam.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,10 +66,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReminderAlarmService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ReminderAlarmService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/reminders/ReminderAlarmService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
+            <state relative-caret-position="-10">
               <caret line="41" column="59" selection-start-line="41" selection-start-column="59" selection-end-line="41" selection-end-column="59" />
               <folding />
             </state>
@@ -112,12 +112,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddTaskActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AddTaskActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/AddTaskActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="76" column="10" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="10" />
-              <folding />
+            <state relative-caret-position="420">
+              <caret line="114" column="33" selection-start-line="114" selection-start-column="33" selection-end-line="114" selection-end-column="33" />
+              <folding>
+                <element signature="e#2032#2033#0" expanded="true" />
+                <element signature="e#2063#2064#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2145,7 +2148,6 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/reminders/AlarmScheduler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/data/TaskAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/AddTaskActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/data/Task.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/views/TaskTitleView.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_empty.xml" />
@@ -2160,6 +2162,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/util/AppUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/TaskDetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/reminders/ReminderAlarmService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/AddTaskActivity.java" />
       </list>
     </option>
   </component>
@@ -3145,14 +3148,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/AddTaskActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="76" column="10" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="411">
@@ -3209,9 +3204,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/reminders/ReminderAlarmService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
+        <state relative-caret-position="-10">
           <caret line="41" column="59" selection-start-line="41" selection-start-column="59" selection-end-line="41" selection-end-column="59" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/AddTaskActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="114" column="33" selection-start-line="114" selection-start-column="33" selection-end-line="114" selection-end-column="33" />
+          <folding>
+            <element signature="e#2032#2033#0" expanded="true" />
+            <element signature="e#2063#2064#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
