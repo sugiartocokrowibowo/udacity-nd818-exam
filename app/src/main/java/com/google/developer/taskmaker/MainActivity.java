@@ -1,5 +1,6 @@
 package com.google.developer.taskmaker;
 
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -27,7 +28,13 @@ import com.google.developer.taskmaker.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, TaskAdapter.OnItemClickListener {
 
     private static final int LOADER_ID = 0;
+
     private static final int REQUEST_DETAIL = 1;
+    private static final int REQUEST_NEW = 2;
+
+    static final int RESULT_DELETE_OK = 10;
+    static final int RESULT_REMIND_OK = 11;
+    static final int RESULT_NEW_OK = 20;
 
     private ActivityMainBinding mBinding;
     private TaskAdapter mAdapter;
@@ -48,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mBinding.fab.setOnClickListener(v -> {
             final Intent intent = new Intent(this, AddTaskActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_NEW);
         });
         super.getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
@@ -127,5 +134,29 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_NEW || requestCode == REQUEST_DETAIL) {
+            Integer resMsg = null;
+            switch (resultCode) {
+                case RESULT_DELETE_OK:
+                    resMsg = R.string.msg_delete_success;
+                    break;
+                case RESULT_NEW_OK:
+                    resMsg = R.string.msg_new_success;
+                    break;
+                case RESULT_REMIND_OK:
+                    resMsg = R.string.msg_remind_success;
+                    break;
+                default:
+                    break;
+            }
+            if (resMsg != null) {
+                Snackbar.make(mBinding.recyclerView, resMsg, Snackbar.LENGTH_LONG).show();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

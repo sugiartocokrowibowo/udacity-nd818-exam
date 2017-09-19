@@ -1,21 +1,16 @@
 package com.google.developer.taskmaker;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import com.google.developer.taskmaker.data.Task;
 import com.google.developer.taskmaker.data.TaskUpdateService;
@@ -66,22 +61,16 @@ public class TaskDetailActivity extends AppCompatActivity implements
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         //DONE: Handle date selection from a DatePickerFragment
-        final Calendar calendar = Calendar.getInstance(AppUtils.LOCALE);
-        final long nowTime = calendar.getTimeInMillis();
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.HOUR_OF_DAY, 12);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        final long pickerTime = calendar.getTimeInMillis();
+        final long nowTime = Calendar.getInstance().getTimeInMillis();
+        final long pickerTime = AppUtils.getTaskStandardTimeInMillis(day, month, year);
         long alarmTime = pickerTime - nowTime;
         if (alarmTime < 0) {
             // If hour of the day is after 12:00:00, execute alarm immediately.
             alarmTime = 0;
         }
         AlarmScheduler.scheduleAlarm(this, alarmTime, mTaskUri);
+        setResult(MainActivity.RESULT_REMIND_OK);
+        finish();
     }
 
     @Override
@@ -89,10 +78,10 @@ public class TaskDetailActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             case R.id.action_reminder:
                 if (mDatePickerDialog == null) {
-                    final Calendar taskDate = Calendar.getInstance(AppUtils.LOCALE);
-                    final int year = taskDate.get(Calendar.YEAR);
-                    final int month = taskDate.get(Calendar.MONTH);
+                    final Calendar taskDate = Calendar.getInstance();
                     final int day = taskDate.get(Calendar.DAY_OF_MONTH);
+                    final int month = taskDate.get(Calendar.MONTH);
+                    final int year = taskDate.get(Calendar.YEAR);
                     mDatePickerDialog = new DatePickerDialog(this, this, year, month, day);
                     // https://stackoverflow.com/a/23762355/3072570
                     mDatePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
@@ -102,8 +91,14 @@ public class TaskDetailActivity extends AppCompatActivity implements
                 }
                 return true;
             case R.id.action_delete:
-                TaskUpdateService.deleteTask(this, mTaskUri);
-                super.onBackPressed();
+                new AlertDialog.Builder(this).setTitle(R.string.dialog_confirm_title)
+                        .setMessage(R.string.msg_confirm_delete)
+                        .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+                            TaskUpdateService.deleteTask(TaskDetailActivity.this, mTaskUri);
+                            setResult(MainActivity.RESULT_DELETE_OK);
+                            finish();
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
                 return true;
             default:
                 break;

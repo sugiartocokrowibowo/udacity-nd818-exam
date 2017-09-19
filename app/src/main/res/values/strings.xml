@@ -22,7 +22,13 @@
     <string name="pref_sortBy_default" translatable="false">default</string>
     <string name="pref_sortBy_due" translatable="false">due</string>
 
+    <!-- Custom Strings -->
+    <string name="dialog_confirm_title">Confirm</string>
+    <string name="action_undo">UNDO</string>
     <string name="msg_task_completed">Task completed!</string>
     <string name="msg_task_uncompleted">Task non completed!</string>
-    <string name="action_undo">UNDO</string>
+    <string name="msg_confirm_delete">Do you really want to remove this task?</string>
+    <string name="msg_delete_success">Task deleted successfully!</string>
+    <string name="msg_new_success">Task inserted successfully!</string>
+    <string name="msg_remind_success">Reminder registered successfully!</string>
 </resources>

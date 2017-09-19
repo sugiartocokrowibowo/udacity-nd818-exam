@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import com.google.developer.taskmaker.data.DatabaseContract.TaskColumns;
 import com.google.developer.taskmaker.data.TaskUpdateService;
 import com.google.developer.taskmaker.databinding.ActivityAddTaskBinding;
+import com.google.developer.taskmaker.util.AppUtils;
 import com.google.developer.taskmaker.views.DatePickerFragment;
 
 import java.util.Calendar;
@@ -74,15 +75,7 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         //Set to noon on the selected day
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, day);
-        c.set(Calendar.HOUR_OF_DAY, 12);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-
-        setDateSelection(c.getTimeInMillis());
+        setDateSelection(AppUtils.getTaskStandardTimeInMillis(day, month, year));
     }
 
     private void updateDateDisplay() {
@@ -103,6 +96,7 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         values.put(TaskColumns.DUE_DATE, getDateSelection());
 
         TaskUpdateService.insertNewTask(this, values);
+        setResult(MainActivity.RESULT_NEW_OK);
         finish();
     }
 

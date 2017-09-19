@@ -74,8 +74,11 @@ public class Task {
     boolean isPastDuoDate() {
         boolean isPast = false;
         if (hasDueDate()) {
-            final Date dueDate = new Date(this.dueDateMillis);
-            isPast = dueDate.before(Calendar.getInstance(AppUtils.LOCALE).getTime());
+            final Calendar calendar = Calendar.getInstance();
+            final Date nowDate = calendar.getTime();
+            calendar.setTimeInMillis(this.dueDateMillis);
+            final Date dueDate = calendar.getTime();
+            isPast = dueDate.before(nowDate);
         }
         return  isPast;
     }
