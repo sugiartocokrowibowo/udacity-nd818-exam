@@ -2,7 +2,15 @@ package com.google.developer.taskmaker.data;
 
 import android.database.Cursor;
 
-import static com.google.developer.taskmaker.data.DatabaseContract.*;
+import com.google.developer.taskmaker.util.AppUtils;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import static com.google.developer.taskmaker.data.DatabaseContract.TaskColumns;
+import static com.google.developer.taskmaker.data.DatabaseContract.getColumnInt;
+import static com.google.developer.taskmaker.data.DatabaseContract.getColumnLong;
+import static com.google.developer.taskmaker.data.DatabaseContract.getColumnString;
 
 /**
  * Helpful data model for holding attributes related to a task.
@@ -58,6 +66,18 @@ public class Task {
      */
     public boolean hasDueDate() {
         return this.dueDateMillis != Long.MAX_VALUE;
+    }
+
+    /**
+     * Useful to verify if date due is past.
+     */
+    boolean isPastDuoDate() {
+        boolean isPast = false;
+        if (hasDueDate()) {
+            final Date dueDate = new Date(this.dueDateMillis);
+            isPast = dueDate.before(Calendar.getInstance(AppUtils.LOCALE).getTime());
+        }
+        return  isPast;
     }
 
 }

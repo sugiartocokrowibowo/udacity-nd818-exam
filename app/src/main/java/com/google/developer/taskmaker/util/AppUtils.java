@@ -14,8 +14,6 @@ public final class AppUtils {
 
     private AppUtils() { super(); }
 
-    private static final Locale LOCALE = Locale.getDefault();
-
-    public static final Date DATE_NOW = Calendar.getInstance(LOCALE).getTime();
+    public static final Locale LOCALE = Locale.getDefault();
 
 }

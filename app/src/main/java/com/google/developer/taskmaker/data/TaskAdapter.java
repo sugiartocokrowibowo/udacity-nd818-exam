@@ -11,9 +11,6 @@ import android.view.ViewGroup;
 import com.google.developer.taskmaker.R;
 import com.google.developer.taskmaker.databinding.ListItemTaskBinding;
 
-import java.util.Date;
-
-import static com.google.developer.taskmaker.util.AppUtils.DATE_NOW;
 import static com.google.developer.taskmaker.views.TaskTitleView.DONE;
 import static com.google.developer.taskmaker.views.TaskTitleView.NORMAL;
 import static com.google.developer.taskmaker.views.TaskTitleView.OVERDUE;
@@ -85,8 +82,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
         if (task.hasDueDate()) {
             holder.mBinding.textDate.setVisibility(View.VISIBLE);
             holder.mBinding.textDate.setText(DateUtils.getRelativeTimeSpanString(task.dueDateMillis));
-            final Date dueDate = new Date(task.dueDateMillis);
-            final int state = task.isComplete ? DONE : dueDate.before(DATE_NOW) ? OVERDUE : NORMAL;
+            final int state = task.isComplete ? DONE : task.isPastDuoDate() ? OVERDUE : NORMAL;
             holder.mBinding.textDescription.setState(state);
         } else {
             holder.mBinding.textDate.setVisibility(View.GONE);

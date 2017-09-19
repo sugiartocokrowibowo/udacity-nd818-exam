@@ -21,8 +21,7 @@ public class AlarmScheduler {
         //Schedule the alarm. Will update an existing item for the same task.
         AlarmManager manager = AlarmManagerProvider.getAlarmManager(context);
 
-        PendingIntent operation =
-                ReminderAlarmService.getReminderPendingIntent(context, reminderTask);
+        PendingIntent operation = ReminderAlarmService.getReminderPendingIntent(context, reminderTask);
 
         manager.setExact(AlarmManager.RTC, alarmTime, operation);
     }

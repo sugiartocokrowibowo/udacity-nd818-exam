@@ -35,8 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:textAppearanceMedium"
-                tools:text="12/31/2021"
-                tools:visibility="visible" />
+                tools:text="12/31/2021" />
         </LinearLayout>
 
         <ImageView
