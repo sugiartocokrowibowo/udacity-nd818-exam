@@ -10,10 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fcc3291b-945b-4ad5-bd1f-bf66f32ece36" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/data/DatabaseContract.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/data/DatabaseContract.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/util/AppUtils.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/util/AppUtils.java" />
     </list>
     <ignored path="udacity-nd818-exam.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,17 +43,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DatabaseContract.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DatabaseContract.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/data/DatabaseContract.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+            <state relative-caret-position="221">
+              <caret line="29" column="27" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppUtils.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AppUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/util/AppUtils.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="315">
@@ -2156,8 +2153,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/data/TaskProvider.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/data/DatabaseContract.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/util/AppUtils.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/data/DatabaseContract.java" />
       </list>
     </option>
   </component>
@@ -3286,18 +3283,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/data/DatabaseContract.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/util/AppUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/developer/taskmaker/data/DatabaseContract.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="29" column="27" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
           <folding />
         </state>
       </provider>
