@@ -3,7 +3,9 @@ package com.google.developer.taskmaker;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
@@ -14,6 +16,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -123,7 +126,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, DatabaseContract.CONTENT_URI, null, null, null, null);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final String defaultSort = super.getString(R.string.pref_sortBy_default);
+        final String sort = prefs.getString(super.getString(R.string.pref_sortBy_key), defaultSort);
+        final String sortOrder = sort.equals(defaultSort) ? DatabaseContract.DEFAULT_SORT : DatabaseContract.DATE_SORT;
+
+        return new CursorLoader(this, DatabaseContract.CONTENT_URI, null, null, null, sortOrder);
     }
 
     @Override
