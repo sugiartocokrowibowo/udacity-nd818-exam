@@ -15,6 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -50,6 +51,9 @@ dependencies {
 
     // Test dependencies (native)
     androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile("com.android.support.test.espresso:espresso-intents:${espressoVersion}", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile "junit:junit:${junitVersion}"

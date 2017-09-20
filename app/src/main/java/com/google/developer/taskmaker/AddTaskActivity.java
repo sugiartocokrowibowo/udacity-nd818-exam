@@ -102,6 +102,9 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         finish();
     }
 
+    /**
+     * When adding a new task, the due date disappears if I rotate my device before clicking Save. (FIXED)
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

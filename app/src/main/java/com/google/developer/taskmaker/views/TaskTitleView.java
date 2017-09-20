@@ -47,7 +47,7 @@ public class TaskTitleView extends AppCompatTextView {
      * @param state New state. One of {@link #NORMAL}, {@link #DONE}, or {@link #OVERDUE}.
      */
     public void setState(int state) {
-        // Remove Paint.STRIKE_THRU_TEXT_FLAG if exists
+        // I am not seeing the task description text style change to strikethrough in the list when a task item is completed. (FIXED)
         if ((getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) == Paint.STRIKE_THRU_TEXT_FLAG) {
             setPaintFlags(getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
         }
@@ -56,6 +56,7 @@ public class TaskTitleView extends AppCompatTextView {
             case DONE:
                 setPaintFlags(getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 setTextColor(ContextCompat.getColor(context, R.color.black));
+                break;
             case NORMAL:
                 setTextColor(ContextCompat.getColor(context, R.color.black));
                 break;

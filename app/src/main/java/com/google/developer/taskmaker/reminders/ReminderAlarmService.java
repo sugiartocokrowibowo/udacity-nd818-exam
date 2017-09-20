@@ -39,6 +39,7 @@ public class ReminderAlarmService extends IntentService {
         Uri uri = intent.getData();
 
         //Display a notification to view the task details
+        //Clicking a reminder notification takes me to the main screen. It should take me to the task details screen. (FIXED)
         Intent action = new Intent(this, TaskDetailActivity.class);
         action.setData(uri);
         PendingIntent operation = TaskStackBuilder.create(this)

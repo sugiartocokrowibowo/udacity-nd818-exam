@@ -176,7 +176,8 @@ public class TaskProvider extends ContentProvider {
         JobScheduler jobScheduler = (JobScheduler) getContext().getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
         //Run the job approximately every hour
-        long jobInterval = 900000L;
+        //Completed tasks should be automatically deleted once every hour. I’m seeing this happen every 15 minutes. (FIXED)
+        long jobInterval = 3600000L;
 
         ComponentName jobService = new ComponentName(getContext(), CleanupJobService.class);
         JobInfo task = new JobInfo.Builder(CLEANUP_JOB_ID, jobService)
